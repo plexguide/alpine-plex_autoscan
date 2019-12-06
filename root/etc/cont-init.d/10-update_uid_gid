@@ -1,12 +1,38 @@
 #!/usr/bin/with-contenv sh
 
-if [ -n $PUID ] && [ $PUID != $(id -u plexautoscan) ]
+if [ -n $PUID ] && [ $PUID == 0 ]
+then
+    exit
+fi
+
+UID=1000
+if [ -n $PUID ]
+then
+    UID=$PUID
+fi
+
+GID=1000
+if [ -n $PGID ]
+then
+    GID=$PGID
+fi
+
+id plexautoscan 2> /dev/null > /dev/null
+plexautoscan_exists=$?
+if [ $plexautoscan_exists != 0 ]
+then
+    groupadd -g $GID -r plexautoscan
+    useradd -u $UID -g $GID -G docker -N -r -m -s /bin/false plexautoscan
+    update="true"
+fi
+
+if [ -n $PUID ] && [ $PUID != $(id -u plexautoscan) ] && [ $PUID != 0 ]
 then
     usermod -o -u "$PUID" plexautoscan
     update="true"
 fi
 
-if [ -n $PGID ] && [ $PGID != $(id -g plexautoscan) ]
+if [ -n $PGID ] && [ $PGID != $(id -g plexautoscan) ] && [ $PGID != 0 ]
 then
     groupmod -o -g "$PGID" plexautoscan
     update="true"
@@ -18,14 +44,14 @@ then
     update="true"
 fi
 
-echo "GID/UID
-User uid:    $(id -u plexautoscan)
-User gid:    $(id -g plexautoscan)
-------------------------------------
-"
-
 if [ -n $update ]
 then
+    echo "GID/UID
+    User uid:    $(id -u plexautoscan)
+    User gid:    $(id -g plexautoscan)
+    ------------------------------------
+    "
+
     chown -R plexautoscan:plexautoscan /config
     chown -R plexautoscan:plexautoscan /opt/plex_autoscan
 fi
