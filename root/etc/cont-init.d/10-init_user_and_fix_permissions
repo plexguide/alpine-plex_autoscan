@@ -85,15 +85,19 @@ else
         "
 fi
 
-chown -R $uid:$gid /config
-find /config -type d -exec chmod 0777 {} +
-chmod 0666 /config/config.json
+#chown -R $uid:$gid /config
+#find /config -type d -exec chmod 0777 {} +
+#chmod 0666 /config/config.json
 
 rclone=/config/rclone/rclone.conf
 if [[ -f "${rclone}" ]]; then
      echo " ------------------------------------"
      echo "  rclone is stored on /config/rclone"
      echo " ------------------------------------"
+     chown -R $uid:$gid /config
+     find /config -type d -exec chmod 0777 {} +
+     chmod 0666 /config/config.json
+     chmod 0666 /config/rclone/rclone.conf
   else 
      echo " ------------------------------------"
      echo "  Searching the rclone.conf || start"
@@ -101,8 +105,10 @@ if [[ -f "${rclone}" ]]; then
      mkdir -p /config/rclone   
      find /config -name "rclone.conf" -type f -exec cp ${rclone} \;
      find /opt -name "rclone.conf" -type f -exec cp {} ${rclone} \;
+     chown -R $uid:$gid /config
      find /config -type d -exec chmod 0777 {} +
-     chmod 0666 ${rclone}
+     chmod 0666 /config/config.json
+     chmod 0666 /config/rclone/rclone.conf
      echo " ------------------------------------"
      echo "   copying the rclone.conf || done"
      echo " ------------------------------------"     
