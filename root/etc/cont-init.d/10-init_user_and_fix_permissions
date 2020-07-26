@@ -90,10 +90,15 @@ find /config -type d -exec chmod 0777 {} +
 chmod 0666 /config/config.json
 
 rclone=/config/rclone/rclone.conf
-if [[ ! -f ${rclone} ]]; then
+if [[ -f "${rclone}" ]]; then
+     echo " ------------------------------------"
+     echo "  rclone is stored on /config/rclone"
+     echo " ------------------------------------"
+  else 
      echo " ------------------------------------"
      echo "  Searching the rclone.conf || start"
-     echo " ------------------------------------"     
+     echo " ------------------------------------"
+     mkdir -p /config/rclone   
      find /config -name "rclone.conf" -type f -exec cp ${rclone} \;
      find /opt -name "rclone.conf" -type f -exec cp {} ${rclone} \;
      find /config -type d -exec chmod 0777 {} +
