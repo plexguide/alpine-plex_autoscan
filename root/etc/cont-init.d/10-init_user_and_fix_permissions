@@ -102,7 +102,7 @@ if [[ -f "${rclone}" ]]; then
      echo " ------------------------------------"
      echo "  Searching the rclone.conf || start"
      echo " ------------------------------------"
-     mkdir -p /config/rclone   
+     mkdir -p /config/rclone
      find /config -name "rclone.conf" -type f -exec cp {} ${rclone} \;
      find /opt -name "rclone.conf" -type f -exec cp {} ${rclone} \;
      chown -R $uid:$gid /config
