@@ -40,7 +40,7 @@ RUN apk --no-cache update -qq \
     rm -rf /var/cache/apk/*
 
 # download plex_autoscan
-RUN git clone --depth 1 --single-branch --branch develop https://github.com/l3uddz/plex_autoscan /opt/plex_autoscan
+RUN git clone --depth 1 --single-branch --branch develop https://github.com/doob187/plex_autoscan /opt/plex_autoscan
 WORKDIR /opt/plex_autoscan
 
 # copy wrapper for 'easy docker run' usage.
