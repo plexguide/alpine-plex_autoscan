@@ -10,10 +10,8 @@ else
     then
         server_ip="127.0.0.1"
     fi
-
     server_port=$(grep SERVER_PORT ${PLEX_AUTOSCAN_CONFIG} | awk -F ': ' '{print $2}' | awk -F ',' '{print $1}')
     server_pass=$(grep SERVER_PASS ${PLEX_AUTOSCAN_CONFIG} | awk -F '"' '{print $4}')
-
     url="http://${server_ip}:${server_port}/${server_pass}"
     curl --silent --show-error -f $url > /dev/null || exit 1
 fi

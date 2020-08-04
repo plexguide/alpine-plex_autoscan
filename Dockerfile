@@ -70,6 +70,11 @@ RUN chmod +x /healthcheck-plex_autoscan.sh
 HEALTHCHECK --interval=20s --timeout=10s --start-period=10s --retries=5 \
     CMD ["/bin/sh", "/healthcheck-plex_autoscan.sh"]
 
+COPY healthcheck-plex.sh /
+RUN chmod +x /healthcheck-plex_autoscan.sh
+HEALTHCHECK --interval=30s --timeout=2s --start-period=5s --retries=5 \
+    CMD ["/bin/sh", "/healthcheck-plex.sh"]
+
 # expose port for http
 EXPOSE 3468/tcp
 
