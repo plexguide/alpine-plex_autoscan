@@ -22,5 +22,6 @@ if [ -f ${PLEX_AUTOSCAN_CONFIG} ]
       echo " -> PLEX running and Token matched "
    fi
 else
-   echo " -> PLEX down or Token missmatched "
+    echo "Default config.json not exist || Exiting."
+	exit 1
 fi
