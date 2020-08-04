@@ -16,7 +16,7 @@ if [ -f ${PLEX_AUTOSCAN_CONFIG} ]
         if [[ ${PGSELFTEST} -le 200 && ${PGSELFTEST} -gt 299 ]]; then
         echo " second check also failed "
         echo " exit now "
-        sleep 30 || exit 1
+        sleep 30 && exit 1
         fi
    else
       echo " -> PLEX running and Token matched "
